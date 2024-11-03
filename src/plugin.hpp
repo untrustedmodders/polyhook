@@ -2,7 +2,7 @@
 
 #include "callback.hpp"
 
-#include <plugify/cpp_plugin.h>
+#include <plugify/cpp_plugin.hpp>
 #include <plugin_export.h>
 
 #include <polyhook2/Detour/NatDetour.hpp>
@@ -27,9 +27,9 @@ namespace PLH {
 		void OnPluginEnd() override;
 		
 	public:
-		Callback* hookDetour(void* pFunc, DataType returnType, const std::vector<DataType>& arguments);
-		Callback* hookVirtual(void* pClass, int index, DataType returnType, const std::vector<DataType>& arguments);
-		Callback* hookVirtual(void* pClass, void* pFunc, DataType returnType, const std::vector<DataType>& arguments);
+		Callback* hookDetour(void* pFunc, DataType returnType, std::span<const DataType> arguments);
+		Callback* hookVirtual(void* pClass, int index, DataType returnType, std::span<const DataType> arguments);
+		Callback* hookVirtual(void* pClass, void* pFunc, DataType returnType, std::span<const DataType> arguments);
 
 		bool unhookDetour(void* pFunc);
 		bool unhookVirtual(void* pClass, int index);

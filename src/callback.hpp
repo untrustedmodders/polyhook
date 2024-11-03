@@ -11,7 +11,7 @@
 #include "polyhook2/PolyHookOs.hpp"
 
 #include <array>
-#include <vector>
+#include <span>
 #include <shared_mutex>
 
 namespace PLH {
@@ -105,7 +105,7 @@ namespace PLH {
 		~Callback();
 
 		uint64_t getJitFunc(const asmjit::FuncSignature& sig, asmjit::Arch arch, CallbackEntry pre, CallbackEntry post);
-		uint64_t getJitFunc(DataType retType, const std::vector<DataType>& paramTypes, CallbackEntry pre, CallbackEntry post);
+		uint64_t getJitFunc(DataType retType, std::span<const DataType> paramTypes, CallbackEntry pre, CallbackEntry post);
 
 		uint64_t* getTrampolineHolder();
 		uint64_t* getFunctionHolder();

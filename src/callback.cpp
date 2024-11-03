@@ -306,7 +306,7 @@ uint64_t PLH::Callback::getJitFunc(const asmjit::FuncSignature& sig, const asmji
 	return m_functionPtr;
 }
 
-uint64_t PLH::Callback::getJitFunc(const DataType retType, const std::vector<DataType>& paramTypes, const CallbackEntry pre, const CallbackEntry post) {
+uint64_t PLH::Callback::getJitFunc(const DataType retType, std::span<const DataType> paramTypes, const CallbackEntry pre, const CallbackEntry post) {
 	asmjit::FuncSignature sig(asmjit::CallConvId::kHost, asmjit::FuncSignature::kNoVarArgs, getTypeId(retType));
 	for (const DataType& type : paramTypes) {
 		sig.addArg(getTypeId(type));

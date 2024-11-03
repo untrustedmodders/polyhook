@@ -7,20 +7,28 @@
 #include <utility>
 #include <vector>
 
-#include <plugify/string.h>
+#include <plugify/string.hpp>
+#include <plugify/vector.hpp>
+
+namespace std::filesystem {
+#if _WIN32
+	using path_view = std::wstring_view;
+#else
+	using path_view = std::string_view;
+#endif
+}
 
 namespace plg {
 	constexpr int32_t kApiVersion = 1;
 
-	extern "C"
-	struct PluginResult {
+	extern "C" struct PluginResult {
 		int32_t version;
 		bool debug;
 	};
 
 	using GetMethodPtrFn = void* (*)(std::string_view);
 	using GetMethodPtr2Fn = void (*)(std::string_view, void**);
-	using GetBaseDirFn = const std::filesystem::path& (*)();
+	using GetBaseDirFn = std::filesystem::path_view (*)();
 	using IsModuleLoadedFn = bool (*)(std::string_view, std::optional<int32_t>, bool);
 	using IsPluginLoadedFn = bool (*)(std::string_view, std::optional<int32_t>, bool);
 
@@ -38,9 +46,9 @@ namespace plg {
 		using GetVersionFn = std::string_view (*)(void*);
 		using GetAuthorFn = std::string_view (*)(void*);
 		using GetWebsiteFn = std::string_view (*)(void*);
-		using GetBaseDirFn = const std::filesystem::path& (*)(void*);
+		using GetBaseDirFn = std::filesystem::path_view (*)(void*);
 		using GetDependenciesFn = std::vector<std::string_view> (*)(void*);
-		using FindResourceFn = std::optional<std::filesystem::path> (*)(void*, const std::filesystem::path&);
+		using FindResourceFn = std::optional<std::filesystem::path_view> (*)(void*, std::filesystem::path_view);
 		extern void* handle;
 		extern GetIdFn GetId;
 		extern GetNameFn GetName;
@@ -67,9 +75,9 @@ namespace plg {
 		std::string_view GetVersion() const { return plugin::GetVersion(plugin::handle); }
 		std::string_view GetAuthor() const { return plugin::GetAuthor(plugin::handle); }
 		std::string_view GetWebsite() const { return plugin::GetWebsite(plugin::handle); }
-		const std::filesystem::path& GetBaseDir() const { return plugin::GetBaseDir(plugin::handle); }
+		std::filesystem::path_view GetBaseDir() const { return plugin::GetBaseDir(plugin::handle); }
 		std::vector<std::string_view> GetDependencies() const { return plugin::GetDependencies(plugin::handle); }
-		std::optional<std::filesystem::path> FindResource(const std::filesystem::path& path) const { return plugin::FindResource(plugin::handle, path); }
+		std::optional<std::filesystem::path_view> FindResource(std::filesystem::path_view path) const { return plugin::FindResource(plugin::handle, path); }
 
 		virtual void OnPluginStart() {};
 		virtual void OnPluginEnd() {};
@@ -102,7 +110,7 @@ namespace plg {
 		if (version < kApiVersion) { \
 			return { kApiVersion, PLUGIFY_IS_DEBUG }; \
 		} \
-		size_t i = 0; \
+		std::size_t i = 0; \
 		GetMethodPtr = reinterpret_cast<GetMethodPtrFn>(api[i++]); \
 		GetMethodPtr2 = reinterpret_cast<GetMethodPtr2Fn>(api[i++]); \
 		GetBaseDir = reinterpret_cast<GetBaseDirFn>(api[i++]); \
@@ -135,33 +143,70 @@ namespace plg {
 }
 
 namespace plg {
-	struct Vector2 {
-		float x{};
-		float y{};
+	extern "C" {
+		struct vec2 {
+			float x;
+			float y;
+		};
 
-		bool operator==(const Vector2&) const = default;
-	};
+		struct vec3 {
+			float x;
+			float y;
+			float z;
+		};
 
-	struct Vector3 {
-		float x{};
-		float y{};
-		float z{};
+		struct vec4 {
+			float x;
+			float y;
+			float z;
+			float w;
+		};
 
-		bool operator==(const Vector3&) const = default;
-	};
+		struct mat4x4 {
+			float m[4][4];
+		};
 
-	struct Vector4 {
-		float x{};
-		float y{};
-		float z{};
-		float w{};
+		struct vec {
+			[[maybe_unused]] char padding[sizeof(plg::vector<int>)];
+		};
 
-		bool operator==(const Vector4&) const = default;
-	};
+		struct str {
+			[[maybe_unused]] char padding[sizeof(plg::string)];
+		};
+	}
 
-	struct Matrix4x4 {
-		float m[4][4]{};
+	bool operator==(const vec2& lhs, const vec2& rhs) {
+		return lhs.x == rhs.x && lhs.y == rhs.y;
+	}
 
-		bool operator==(const Matrix4x4&) const = default;
-	};
+	bool operator==(const vec3& lhs, const vec3& rhs) {
+		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+	}
+
+	bool operator==(const vec4& lhs, const vec4& rhs) {
+		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.w == rhs.w;
+	}
+
+	bool operator==(const mat4x4& lhs, const mat4x4& rhs) {
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 4; ++j) {
+				if (lhs.m[i][j] != rhs.m[i][j])
+					return false;
+			}
+		}
+		return true;
+	}
+
+    plg::str ReturnStr(plg::string str) {
+        plg::str ret{};
+        std::construct_at(reinterpret_cast<plg::string*>(&ret), std::move(str));
+        return ret;
+    }
+
+    template<typename T>
+    plg::vec ReturnVec(plg::vector<T> vec) {
+        plg::vec ret{};
+        std::construct_at(reinterpret_cast<plg::vector<T>*>(&ret), std::move(vec));
+        return ret;
+    }
 }

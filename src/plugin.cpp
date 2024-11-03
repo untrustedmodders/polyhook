@@ -42,7 +42,7 @@ void PolyHookPlugin::OnPluginEnd() {
 	g_jitRuntime.reset();
 }
 
-Callback* PolyHookPlugin::hookDetour(void* pFunc, DataType returnType, const std::vector<DataType>& arguments) {
+Callback* PolyHookPlugin::hookDetour(void* pFunc, DataType returnType, std::span<const DataType> arguments) {
 	if (!pFunc)
 		return nullptr;
 
@@ -73,7 +73,7 @@ Callback* PolyHookPlugin::hookDetour(void* pFunc, DataType returnType, const std
 	return m_callbacks.emplace(std::pair{key, -1}, std::move(callback)).first->second.get();
 }
 
-Callback* PolyHookPlugin::hookVirtual(void* pClass, int index, DataType returnType, const std::vector<DataType>& arguments) {
+Callback* PolyHookPlugin::hookVirtual(void* pClass, int index, DataType returnType, std::span<const DataType> arguments) {
 	if (!pClass || index == -1)
 		return nullptr;
 
@@ -112,7 +112,7 @@ Callback* PolyHookPlugin::hookVirtual(void* pClass, int index, DataType returnTy
 	return m_callbacks.emplace(std::pair{key, index}, std::move(callback)).first->second.get();
 }
 
-Callback* PolyHookPlugin::hookVirtual(void* pClass, void* pFunc, DataType returnType, const std::vector<DataType>& arguments) {
+Callback* PolyHookPlugin::hookVirtual(void* pClass, void* pFunc, DataType returnType, std::span<const DataType> arguments) {
 	return hookVirtual(pClass, getVTableIndex(pFunc), returnType, arguments);
 }
 
@@ -343,17 +343,17 @@ int PolyHookPlugin::getVTableIndex(void* pFunc) const {
 }
 
 extern "C"
-PLUGIN_API Callback* HookDetour(void* pFunc, DataType returnType, const std::vector<DataType>& arguments) {
+PLUGIN_API Callback* HookDetour(void* pFunc, DataType returnType, const plg::vector<DataType>& arguments) {
 	return g_polyHookPlugin.hookDetour(pFunc, returnType, arguments);
 }
 
 extern "C"
-PLUGIN_API Callback* HookVirtual(void* pClass, int index, DataType returnType, const std::vector<DataType>& arguments) {
+PLUGIN_API Callback* HookVirtual(void* pClass, int index, DataType returnType, const plg::vector<DataType>& arguments) {
 	return g_polyHookPlugin.hookVirtual(pClass, index, returnType, arguments);
 }
 
 extern "C"
-PLUGIN_API Callback* HookVirtualByFunc(void* pClass, void* pFunc, DataType returnType, const std::vector<DataType>& arguments) {
+PLUGIN_API Callback* HookVirtualByFunc(void* pClass, void* pFunc, DataType returnType, const plg::vector<DataType>&  arguments) {
 	return g_polyHookPlugin.hookVirtual(pClass, pFunc, returnType, arguments);
 }
 
