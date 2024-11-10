@@ -344,17 +344,17 @@ int PolyHookPlugin::getVTableIndex(void* pFunc) const {
 
 extern "C"
 PLUGIN_API Callback* HookDetour(void* pFunc, DataType returnType, const plg::vector<DataType>& arguments) {
-	return g_polyHookPlugin.hookDetour(pFunc, returnType, arguments);
+	return g_polyHookPlugin.hookDetour(pFunc, returnType, std::span(arguments.data(), arguments.size()));
 }
 
 extern "C"
 PLUGIN_API Callback* HookVirtual(void* pClass, int index, DataType returnType, const plg::vector<DataType>& arguments) {
-	return g_polyHookPlugin.hookVirtual(pClass, index, returnType, arguments);
+	return g_polyHookPlugin.hookVirtual(pClass, index, returnType, std::span(arguments.data(), arguments.size()));
 }
 
 extern "C"
 PLUGIN_API Callback* HookVirtualByFunc(void* pClass, void* pFunc, DataType returnType, const plg::vector<DataType>&  arguments) {
-	return g_polyHookPlugin.hookVirtual(pClass, pFunc, returnType, arguments);
+	return g_polyHookPlugin.hookVirtual(pClass, pFunc, returnType, std::span(arguments.data(), arguments.size()));
 }
 
 extern "C"
