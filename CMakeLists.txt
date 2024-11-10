@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>")
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
@@ -40,6 +41,14 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE PolyHook_2)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PolyHook_2_SOURCE_DIR})
+
+if(MSVC)
+    target_compile_options(asmjit PUBLIC /wd5054)
+elseif(MINGW)
+    target_compile_options(asmjit PUBLIC -Wno-deprecated-enum-enum-conversion)
+else()
+    target_compile_options(asmjit PUBLIC -Wno-deprecated-anon-enum-enum-conversion -Wno-deprecated-enum-enum-conversion)
+endif()
 
 if(MSVC)
     #target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
