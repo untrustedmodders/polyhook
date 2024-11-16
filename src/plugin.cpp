@@ -398,7 +398,7 @@ PLUGIN_API void UnhookAll() {
 }
 
 extern "C"
-PLUGIN_API void HookAllVirtual(void* pClass) {
+PLUGIN_API void UnhookAllVirtual(void* pClass) {
 	g_polyHookPlugin.unhookAllVirtual(pClass);
 }
 

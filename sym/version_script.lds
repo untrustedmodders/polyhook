@@ -14,7 +14,7 @@
         FindVirtualByFunc;
         FindOriginalAddr;
         UnhookAll;
-        HookAllVirtual;
+        UnhookAllVirtual;
         AddCallback;
         RemoveCallback;
         IsCallbackRegistered;
