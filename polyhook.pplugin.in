@@ -18,188 +18,243 @@
   "exportedMethods": [
     {
       "name": "HookDetour",
+      "group": "Core",
+      "description": "Sets a detour hook",
       "funcName": "HookDetour",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "pFunc"
+          "name": "pFunc",
+          "description": "Function address"
         },
         {
           "type": "uint8",
-          "name": "returnType"
+          "name": "returnType",
+          "description": "Return type"
         },
         {
           "type": "uint8*",
-          "name": "arguments"
+          "name": "arguments",
+          "description": "Arguments type array"
         }
       ],
       "retType": {
-        "type": "ptr64"
+        "type": "ptr64",
+        "description": "Returns hook pointer"
       }
     },
     {
       "name": "HookVirtual",
+      "group": "Core",
+      "description": "Sets a virtual hook",
       "funcName": "HookVirtual",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "pClass"
+          "name": "pClass",
+          "description": "Object pointer"
         },
         {
           "type": "int32",
-          "name": "index"
+          "name": "index",
+          "description": "Vtable offset"
         },
         {
           "type": "uint8",
-          "name": "returnType"
+          "name": "returnType",
+          "description": "Return type"
         },
         {
           "type": "uint8*",
-          "name": "arguments"
+          "name": "arguments",
+          "description": "Arguments type array"
         }
       ],
       "retType": {
-        "type": "ptr64"
+        "type": "ptr64",
+        "description": "Returns hook pointer"
       }
     },
     {
       "name": "HookVirtualByFunc",
+      "group": "Core",
+      "description": "Sets a virtual hook by pointer",
       "funcName": "HookVirtualByFunc",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "pClass"
+          "name": "pClass",
+          "description": "Object pointer"
         },
         {
           "type": "ptr64",
-          "name": "pFunc"
+          "name": "pFunc",
+          "description": "Vtable member function address"
         },
         {
           "type": "uint8",
-          "name": "returnType"
+          "name": "returnType",
+          "description": "Return type"
         },
         {
           "type": "uint8*",
-          "name": "arguments"
+          "name": "arguments",
+          "description": "Arguments type array"
         }
       ],
       "retType": {
-        "type": "ptr64"
+        "type": "ptr64",
+        "description": "Returns hook pointer"
       }
     },
     {
       "name": "UnhookDetour",
+      "group": "Core",
+      "description": "Removes a detour hook",
       "funcName": "UnhookDetour",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "pFunc"
+          "name": "pFunc",
+          "description": "Function address"
         }
       ],
       "retType": {
-        "type": "bool"
+        "type": "bool",
+        "description": "Returns true on success, false otherwise"
       }
     },
     {
       "name": "UnhookVirtual",
+      "group": "Core",
+      "description": "Removes a virtual hook",
       "funcName": "UnhookVirtual",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "pClass"
+          "name": "pClass",
+          "description": "Object pointer"
         },
         {
           "type": "int32",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
-        "type": "bool"
+        "type": "bool",
+        "description": "Returns true on success, false otherwise"
       }
     },
     {
       "name": "UnhookVirtualByFunc",
+      "group": "Core",
+      "description": "Removes a virtual hook by pointer",
       "funcName": "UnhookVirtualByFunc",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "pClass"
+          "name": "pClass",
+          "description": "Object pointer"
         },
         {
           "type": "ptr64",
-          "name": "pFunc"
+          "name": "pFunc",
+          "description": "Vtable member function address"
         }
       ],
       "retType": {
-        "type": "bool"
+        "type": "bool",
+        "description": "Returns true on success, false otherwise"
       }
     },
     {
       "name": "FindDetour",
+      "group": "Lookup",
+      "description": "Attempts to find existing detour hook",
       "funcName": "FindDetour",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "pFunc"
+          "name": "pFunc",
+          "description": "Function address"
         }
       ],
       "retType": {
-        "type": "ptr64"
+        "type": "ptr64",
+        "description": "Returns hook pointer"
       }
     },
     {
       "name": "FindVirtual",
+      "group": "Lookup",
+      "description": "Attempts to find existing virtual hook",
       "funcName": "FindVirtual",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "pClass"
+          "name": "pClass",
+          "description": "Object pointer"
         },
         {
           "type": "int32",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
-        "type": "ptr64"
+        "type": "ptr64",
+        "description": "Returns hook pointer"
       }
     },
     {
       "name": "FindVirtualByFunc",
+      "group": "Lookup",
+      "description": "Attempts to find existing detour hook by pointer",
       "funcName": "FindVirtualByFunc",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "pClass"
+          "name": "pClass",
+          "description": "Object pointer"
         },
         {
           "type": "ptr64",
-          "name": "pFunc"
+          "name": "pFunc",
+          "description": "Function address"
         }
       ],
       "retType": {
-        "type": "ptr64"
+        "type": "ptr64",
+        "description": "Returns hook pointer"
       }
     },
     {
       "name": "FindOriginalAddr",
+      "group": "Lookup",
+      "description": "Attempts to find original address of function before setting hook",
       "funcName": "FindOriginalAddr",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "pClass"
+          "name": "pClass",
+          "description": "Object pointer"
         },
         {
           "type": "ptr64",
-          "name": "pAddr"
+          "name": "pAddr",
+          "description": "Address of function set by hook"
         }
       ],
       "retType": {
-        "type": "ptr64"
+        "type": "ptr64",
+        "description": "Address of original function"
       }
     },
     {
       "name": "UnhookAll",
+      "group": "Core",
+      "description": "Removes all previously set hooks",
       "funcName": "UnhookAll",
       "paramTypes": [
       ],
@@ -208,12 +263,15 @@
       }
     },
     {
-      "name": "HookAllVirtual",
-      "funcName": "HookAllVirtual",
+      "name": "UnhookAllVirtual",
+      "group": "Core",
+      "description": "Removes all previously set hooks on the object",
+      "funcName": "UnhookAllVirtual",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "pClass"
+          "name": "pClass",
+          "description": "Object pointer"
         }
       ],
       "retType": {
@@ -222,15 +280,19 @@
     },
     {
       "name": "AddCallback",
+      "group": "Core",
+      "description": "Adds a callback to existing hook",
       "funcName": "AddCallback",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "hook"
+          "name": "hook",
+          "description": "Hook pointer"
         },
         {
           "type": "bool",
-          "name": "post"
+          "name": "post",
+          "description": "True indicates post hook"
         },
         {
           "type": "function",
@@ -241,42 +303,52 @@
             "paramTypes": [
               {
                 "type": "bool",
-                "name": "post"
+                "name": "post",
+                "description": "True indicates post hook"
               },
               {
                 "type": "ptr64",
-                "name": "params"
+                "name": "params",
+                "description": "Pointer to params structure"
               },
               {
                 "type": "int32",
-                "name": "count"
+                "name": "count",
+                "description": "Parameter count"
               },
               {
                 "type": "ptr64",
-                "name": "ret"
+                "name": "ret",
+                "description": "Pointer to return structure"
               }
             ],
             "retType": {
-              "type": "int32"
+              "type": "int32",
+              "description": "Ignored = Handler didn't take any action\nHandled = We did something, but real function should still be called\nOverride = Call real function, but use my return value\nSupercede = Skip real function; use my return value\nIgnored for post hooks."
             }
           }
         }
       ],
       "retType": {
-        "type": "bool"
+        "type": "bool",
+        "description": "Returns true on success, false otherwise"
       }
     },
     {
       "name": "RemoveCallback",
+      "group": "Core",
+      "description": "Removes a callback from existing hook",
       "funcName": "RemoveCallback",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "hook"
+          "name": "hook",
+          "description": "Hook pointer"
         },
         {
           "type": "bool",
-          "name": "post"
+          "name": "post",
+          "description": "True indicates post hook"
         },
         {
           "type": "function",
@@ -287,42 +359,52 @@
             "paramTypes": [
               {
                 "type": "bool",
-                "name": "post"
+                "name": "post",
+                "description": "True indicates post hook"
               },
               {
                 "type": "ptr64",
-                "name": "params"
+                "name": "params",
+                "description": "Pointer to params structure"
               },
               {
                 "type": "int32",
-                "name": "count"
+                "name": "count",
+                "description": "Parameter count"
               },
               {
                 "type": "ptr64",
-                "name": "ret"
+                "name": "ret",
+                "description": "Pointer to return structure"
               }
             ],
             "retType": {
-              "type": "int32"
+              "type": "int32",
+              "description": "Ignored = Handler didn't take any action\nHandled = We did something, but real function should still be called\nOverride = Call real function, but use my return value\nSupercede = Skip real function; use my return value\nIgnored for post hooks."
             }
           }
         }
       ],
       "retType": {
-        "type": "bool"
+        "type": "bool",
+        "description": "Returns true on success, false otherwise"
       }
     },
     {
       "name": "IsCallbackRegistered",
+      "group": "Core",
+      "description": "Checks that a callback exists on existing hook",
       "funcName": "IsCallbackRegistered",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "hook"
+          "name": "hook",
+          "description": "Hook pointer"
         },
         {
           "type": "bool",
-          "name": "post"
+          "name": "post",
+          "description": "True indicates post hook"
         },
         {
           "type": "function",
@@ -333,68 +415,86 @@
             "paramTypes": [
               {
                 "type": "bool",
-                "name": "post"
+                "name": "post",
+                "description": "True indicates post hook"
               },
               {
                 "type": "ptr64",
-                "name": "params"
+                "name": "params",
+                "description": "Pointer to params structure"
               },
               {
                 "type": "int32",
-                "name": "count"
+                "name": "count",
+                "description": "Parameter count"
               },
               {
                 "type": "ptr64",
-                "name": "ret"
+                "name": "ret",
+                "description": "Pointer to return structure"
               }
             ],
             "retType": {
-              "type": "int32"
+              "type": "int32",
+              "description": "Ignored = Handler didn't take any action\nHandled = We did something, but real function should still be called\nOverride = Call real function, but use my return value\nSupercede = Skip real function; use my return value\nIgnored for post hooks."
             }
           }
         }
       ],
       "retType": {
-        "type": "bool"
+        "type": "bool",
+        "description": "Returns true on success, false otherwise"
       }
     },
     {
       "name": "AreCallbacksRegistered",
+      "group": "Core",
+      "description": "Checks that a any callback exists on existing hook",
       "funcName": "AreCallbacksRegistered",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "hook"
+          "name": "hook",
+          "description": "Hook pointer"
         }
       ],
       "retType": {
-        "type": "bool"
+        "type": "bool",
+        "description": "Returns true on success, false otherwise"
       }
     },
     {
       "name": "GetCallbackAddr",
+      "group": "Getters",
+      "description": "Get callback function address",
       "funcName": "GetCallbackAddr",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "hook"
+          "name": "hook",
+          "description": "Hook pointer"
         }
       ],
       "retType": {
-        "type": "ptr64"
+        "type": "ptr64",
+        "description": "Returns jit generated callback pointer"
       }
     },
     {
       "name": "GetArgumentBool",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentBool",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -403,15 +503,19 @@
     },
     {
       "name": "GetArgumentInt8",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentInt8",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -420,15 +524,19 @@
     },
     {
       "name": "GetArgumentUInt8",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentUInt8",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -437,15 +545,19 @@
     },
     {
       "name": "GetArgumentInt16",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentInt16",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -454,15 +566,19 @@
     },
     {
       "name": "GetArgumentUInt16",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentUInt16",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -471,15 +587,19 @@
     },
     {
       "name": "GetArgumentInt32",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentInt32",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -488,15 +608,19 @@
     },
     {
       "name": "GetArgumentUInt32",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentUInt32",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -505,15 +629,19 @@
     },
     {
       "name": "GetArgumentInt64",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentInt64",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -522,15 +650,19 @@
     },
     {
       "name": "GetArgumentUInt64",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentUInt64",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -539,15 +671,19 @@
     },
     {
       "name": "GetArgumentFloat",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentFloat",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -556,15 +692,19 @@
     },
     {
       "name": "GetArgumentDouble",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentDouble",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -573,15 +713,19 @@
     },
     {
       "name": "GetArgumentPointer",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentPointer",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -590,15 +734,19 @@
     },
     {
       "name": "GetArgumentString",
+      "group": "Getters",
+      "description": "Get argument value",
       "funcName": "GetArgumentString",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -607,19 +755,24 @@
     },
     {
       "name": "SetArgumentBool",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentBool",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "bool",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -628,19 +781,24 @@
     },
     {
       "name": "SetArgumentInt8",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentInt8",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "int8",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -649,19 +807,24 @@
     },
     {
       "name": "SetArgumentUInt8",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentUInt8",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "uint8",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -670,19 +833,24 @@
     },
     {
       "name": "SetArgumentInt16",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentInt16",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "int16",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -691,19 +859,24 @@
     },
     {
       "name": "SetArgumentUInt16",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentUInt16",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "uint16",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -712,19 +885,24 @@
     },
     {
       "name": "SetArgumentInt32",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentInt32",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "int32",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -733,19 +911,24 @@
     },
     {
       "name": "SetArgumentUInt32",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentUInt32",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "uint32",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -754,19 +937,24 @@
     },
     {
       "name": "SetArgumentInt64",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentInt64",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "int64",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -775,19 +963,24 @@
     },
     {
       "name": "SetArgumentUInt64",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentUInt64",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "uint64",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -796,19 +989,24 @@
     },
     {
       "name": "SetArgumentFloat",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentFloat",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "float",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -817,19 +1015,24 @@
     },
     {
       "name": "SetArgumentDouble",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentDouble",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "double",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -838,19 +1041,24 @@
     },
     {
       "name": "SetArgumentPointer",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentPointer",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "ptr64",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -859,19 +1067,24 @@
     },
     {
       "name": "SetArgumentString",
+      "group": "Setters",
+      "description": "Set argument value",
       "funcName": "SetArgumentString",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "params"
+          "name": "params",
+          "description": "Pointer to params structure"
         },
         {
           "type": "uint64",
-          "name": "index"
+          "name": "index",
+          "description": "Value to set"
         },
         {
           "type": "string",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -880,11 +1093,14 @@
     },
     {
       "name": "GetReturnBool",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnBool",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -893,11 +1109,14 @@
     },
     {
       "name": "GetReturnInt8",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnInt8",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -906,11 +1125,14 @@
     },
     {
       "name": "GetReturnUInt8",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnUInt8",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -919,11 +1141,14 @@
     },
     {
       "name": "GetReturnInt16",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnInt16",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -932,11 +1157,14 @@
     },
     {
       "name": "GetReturnUInt16",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnUInt16",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -945,11 +1173,14 @@
     },
     {
       "name": "GetReturnInt32",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnInt32",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -958,11 +1189,14 @@
     },
     {
       "name": "GetReturnUInt32",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnUInt32",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -971,11 +1205,14 @@
     },
     {
       "name": "GetReturnInt64",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnInt64",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -984,11 +1221,14 @@
     },
     {
       "name": "GetReturnUInt64",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnUInt64",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -997,11 +1237,14 @@
     },
     {
       "name": "GetReturnFloat",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnFloat",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -1010,11 +1253,14 @@
     },
     {
       "name": "GetReturnDouble",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnDouble",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -1023,11 +1269,14 @@
     },
     {
       "name": "GetReturnPointer",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnPointer",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -1036,11 +1285,14 @@
     },
     {
       "name": "GetReturnString",
+      "group": "Getters",
+      "description": "Get return value",
       "funcName": "GetReturnString",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         }
       ],
       "retType": {
@@ -1049,15 +1301,19 @@
     },
     {
       "name": "SetReturnBool",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnBool",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "bool",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -1066,15 +1322,19 @@
     },
     {
       "name": "SetReturnInt8",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnInt8",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "int8",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -1083,15 +1343,19 @@
     },
     {
       "name": "SetReturnUInt8",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnUInt8",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "uint8",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -1100,15 +1364,19 @@
     },
     {
       "name": "SetReturnInt16",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnInt16",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "int16",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -1117,15 +1385,19 @@
     },
     {
       "name": "SetReturnUInt16",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnUInt16",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "uint16",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -1134,15 +1406,19 @@
     },
     {
       "name": "SetReturnInt32",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnInt32",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "int32",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -1151,15 +1427,19 @@
     },
     {
       "name": "SetReturnUInt32",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnUInt32",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "uint32",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -1168,15 +1448,19 @@
     },
     {
       "name": "SetReturnInt64",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnInt64",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "int64",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -1185,15 +1469,19 @@
     },
     {
       "name": "SetReturnUInt64",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnUInt64",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "uint64",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -1202,15 +1490,19 @@
     },
     {
       "name": "SetReturnFloat",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnFloat",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "float",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -1219,15 +1511,19 @@
     },
     {
       "name": "SetReturnDouble",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnDouble",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "double",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -1236,15 +1532,19 @@
     },
     {
       "name": "SetReturnPointer",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnPointer",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "ptr64",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
@@ -1253,15 +1553,19 @@
     },
     {
       "name": "SetReturnString",
+      "group": "Setters",
+      "description": "Set return value",
       "funcName": "SetReturnString",
       "paramTypes": [
         {
           "type": "ptr64",
-          "name": "ret"
+          "name": "ret",
+          "description": "Pointer to return structure"
         },
         {
           "type": "string",
-          "name": "value"
+          "name": "value",
+          "description": "Value to set"
         }
       ],
       "retType": {
