@@ -35,13 +35,12 @@ asmjit::TypeId PLH::Callback::getTypeId(DataType type) {
 			return getTypeIdx<double>();
 		case DataType::Pointer:
 		case DataType::String:
-		case DataType::WString:
 			return asmjit::TypeId::kUIntPtr;
 	}
 	return asmjit::TypeId::kVoid;
 }
 
-uint64_t PLH::Callback::getJitFunc(const asmjit::FuncSignature& sig, const asmjit::Arch arch, const CallbackEntry pre, const CallbackEntry post) {
+uint64_t PLH::Callback::getJitFunc(const asmjit::FuncSignature& sig, const CallbackEntry pre, const CallbackEntry post) {
 	if (m_functionPtr) {
 		return m_functionPtr;
 	}
@@ -311,7 +310,7 @@ uint64_t PLH::Callback::getJitFunc(const DataType retType, std::span<const DataT
 	for (const DataType& type : paramTypes) {
 		sig.addArg(getTypeId(type));
 	}
-	return getJitFunc(sig, asmjit::Arch::kHost, pre, post);
+	return getJitFunc(sig, pre, post);
 }
 
 template<typename E>

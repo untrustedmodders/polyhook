@@ -29,8 +29,8 @@ namespace PLH {
 		Float,
 		Double,
 		Pointer,
-		String,
-		WString
+		String
+		// TODO: Add support of POD types
 	};
 
 	enum class ReturnAction : int32_t {
@@ -104,7 +104,7 @@ namespace PLH {
 		Callback();
 		~Callback();
 
-		uint64_t getJitFunc(const asmjit::FuncSignature& sig, asmjit::Arch arch, CallbackEntry pre, CallbackEntry post);
+		uint64_t getJitFunc(const asmjit::FuncSignature& sig, CallbackEntry pre, CallbackEntry post);
 		uint64_t getJitFunc(DataType retType, std::span<const DataType> paramTypes, CallbackEntry pre, CallbackEntry post);
 
 		uint64_t* getTrampolineHolder();
