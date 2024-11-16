@@ -33,7 +33,7 @@
           "description": "Return type"
         },
         {
-          "type": "uint8*",
+          "type": "uint8[]",
           "name": "arguments",
           "description": "Arguments type array"
         }
@@ -65,7 +65,7 @@
           "description": "Return type"
         },
         {
-          "type": "uint8*",
+          "type": "uint8[]",
           "name": "arguments",
           "description": "Arguments type array"
         }
@@ -97,7 +97,7 @@
           "description": "Return type"
         },
         {
-          "type": "uint8*",
+          "type": "uint8[]",
           "name": "arguments",
           "description": "Arguments type array"
         }
