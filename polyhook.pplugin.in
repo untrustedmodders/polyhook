@@ -325,7 +325,7 @@
             ],
             "retType": {
               "type": "int32",
-              "description": "Ignored = Handler didn't take any action\nHandled = We did something, but real function should still be called\nOverride = Call real function, but use my return value\nSupercede = Skip real function; use my return value\nIgnored for post hooks."
+              "description": "Ignored = Handler didn't take any action<br>Handled = We did something, but real function should still be called<br>Override = Call real function, but use my return value<br>Supercede = Skip real function; use my return value<br>Ignored for post hooks."
             }
           }
         }
@@ -382,7 +382,7 @@
             ],
             "retType": {
               "type": "int32",
-              "description": "Ignored = Handler didn't take any action\nHandled = We did something, but real function should still be called\nOverride = Call real function, but use my return value\nSupercede = Skip real function; use my return value\nIgnored for post hooks."
+              "description": "Ignored = Handler didn't take any action<br>Handled = We did something, but real function should still be called<br>Override = Call real function, but use my return value<br>Supercede = Skip real function; use my return value<br>Ignored for post hooks."
             }
           }
         }
@@ -439,7 +439,7 @@
             ],
             "retType": {
               "type": "int32",
-              "description": "Ignored = Handler didn't take any action\nHandled = We did something, but real function should still be called\nOverride = Call real function, but use my return value\nSupercede = Skip real function; use my return value\nIgnored for post hooks."
+              "description": "Ignored = Handler didn't take any action<br>Handled = We did something, but real function should still be called<br>Override = Call real function, but use my return value<br>Supercede = Skip real function; use my return value<br>Ignored for post hooks."
             }
           }
         }
