@@ -325,7 +325,7 @@
             ],
             "retType": {
               "type": "int32",
-              "description": "Ignored = Handler didn't take any action<br>Handled = We did something, but real function should still be called<br>Override = Call real function, but use my return value<br>Supercede = Skip real function; use my return value<br>Ignored for post hooks."
+              "description": "<br>Ignored(0) = Handler didn't take any action<br>Handled(1) = We did something, but real function should still be called<br>Override(2) = Call real function, but use my return value<br>Supercede(3) = Skip real function; use my return value<br>Ignored for post hooks."
             }
           }
         }
@@ -382,7 +382,7 @@
             ],
             "retType": {
               "type": "int32",
-              "description": "Ignored = Handler didn't take any action<br>Handled = We did something, but real function should still be called<br>Override = Call real function, but use my return value<br>Supercede = Skip real function; use my return value<br>Ignored for post hooks."
+              "description": "<br>Ignored(0) = Handler didn't take any action<br>Handled(1) = We did something, but real function should still be called<br>Override(2) = Call real function, but use my return value<br>Supercede(3) = Skip real function; use my return value<br>Ignored for post hooks."
             }
           }
         }
@@ -439,7 +439,7 @@
             ],
             "retType": {
               "type": "int32",
-              "description": "Ignored = Handler didn't take any action<br>Handled = We did something, but real function should still be called<br>Override = Call real function, but use my return value<br>Supercede = Skip real function; use my return value<br>Ignored for post hooks."
+              "description": "<br>Ignored(0) = Handler didn't take any action<br>Handled(1) = We did something, but real function should still be called<br>Override(2) = Call real function, but use my return value<br>Supercede(3) = Skip real function; use my return value<br>Ignored for post hooks."
             }
           }
         }
