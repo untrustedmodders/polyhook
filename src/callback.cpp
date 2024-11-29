@@ -80,9 +80,11 @@ uint64_t PLH::Callback::getJitFunc(const asmjit::FuncSignature& sig, const Callb
 	
 	log.addFlags(kFormatFlags);
 	code.setLogger(&log);*/
-	
+
+#if PLUGIFY_IS_RELEASE
 	// too small to really need it
 	func->frame().resetPreservedFP();
+#endif
 
 	// Create labels
 	asmjit::Label supercede = cc.newLabel();
