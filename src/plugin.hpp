@@ -46,10 +46,11 @@ namespace PLH {
 		int getVTableIndex(void* pFunc) const;
 
 	private:
-		std::map<void*, std::unique_ptr<IHook>> m_vhooks;
-		std::map<void*, std::unique_ptr<NatDetour>> m_detours;
+		std::shared_ptr<asmjit::JitRuntime> m_jitRuntime;
 		std::map<std::pair<void*, int>, std::unique_ptr<Callback>> m_callbacks;
 		std::map<void*, std::pair<VFuncMap, VFuncMap>> m_tables;
+		std::map<void*, std::unique_ptr<IHook>> m_vhooks;
+		std::map<void*, std::unique_ptr<NatDetour>> m_detours;
 		std::mutex m_mutex;
 	};
 }

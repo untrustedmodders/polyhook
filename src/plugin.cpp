@@ -1,9 +1,8 @@
 #include "plugin.hpp"
+#include "scope_guard.hpp"
 
 PLH::PolyHookPlugin g_polyHookPlugin;
 EXPOSE_PLUGIN(PLUGIN_API, &g_polyHookPlugin)
-
-std::unique_ptr<asmjit::JitRuntime> PLH::g_jitRuntime;
 
 using namespace PLH;
 
@@ -35,11 +34,10 @@ static void PostCallback(Callback* callback, const Callback::Parameters* params,
 }
 
 void PolyHookPlugin::OnPluginStart() {
-	g_jitRuntime = std::make_unique<asmjit::JitRuntime>();
+	m_jitRuntime = std::make_unique<asmjit::JitRuntime>();
 }
 
 void PolyHookPlugin::OnPluginEnd() {
-	g_jitRuntime.reset();
 }
 
 Callback* PolyHookPlugin::hookDetour(void* pFunc, DataType returnType, std::span<const DataType> arguments) {
@@ -56,10 +54,11 @@ Callback* PolyHookPlugin::hookDetour(void* pFunc, DataType returnType, std::span
 		}
 	}
 
-	auto callback = std::make_unique<Callback>();
+	auto callback = std::make_unique<Callback>(m_jitRuntime);
 	auto error = callback->getError();
 	if (!error.empty()) {
-		// Log ?
+		std::puts(error.data());
+		std::terminate();
 		return nullptr;
 	}
 
@@ -89,10 +88,11 @@ Callback* PolyHookPlugin::hookVirtual(void* pClass, int index, DataType returnTy
 		}
 	}
 
-	auto callback = std::make_unique<Callback>();
+	auto callback = std::make_unique<Callback>(m_jitRuntime);
 	auto error = callback->getError();
 	if (!error.empty()) {
-		// Log ?
+		std::puts(error.data());
+		std::terminate();
 		return nullptr;
 	}
 
@@ -125,11 +125,10 @@ bool PolyHookPlugin::unhookDetour(void* pFunc) {
 	auto it = m_detours.find(pFunc);
 	if (it != m_detours.end()) {
 		auto& detour = it->second;
-		if (detour->unHook()) {
-			m_callbacks.erase(std::pair{detour.get(), -1});
-			m_detours.erase(it);
-			return true;
-		}
+		detour->unHook();
+		m_detours.erase(it);
+		m_callbacks.erase(std::pair{detour.get(), -1});
+		return true;
 	}
 
 	return false;
@@ -144,10 +143,13 @@ bool PolyHookPlugin::unhookVirtual(void* pClass, int index) {
 	auto it = m_vhooks.find(pClass);
 	if (it != m_vhooks.end()) {
 		auto& vtable = it->second;
-		if (vtable->unHook()) {
+		vtable->unHook();
+
+		bool shouldBeUnhook = true;
+		auto hookGuard = ScopeGuard([&]() {
+			if (shouldBeUnhook) m_vhooks.erase(it);
 			m_callbacks.erase(std::pair{vtable.get(), index});
-			m_vhooks.erase(it);
-		}
+		});
 
 		auto it2 = m_tables.find(pClass);
 		if (it2 != m_tables.end()) {
@@ -163,7 +165,9 @@ bool PolyHookPlugin::unhookVirtual(void* pClass, int index) {
 			if (!vtable->hook())
 				return false;
 
-			return m_vhooks.emplace(pClass, std::move(vtable)).first->second.get();
+			// do not unhook, we just replace our value in map
+			shouldBeUnhook = false;
+			return true;
 		}
 	}
 

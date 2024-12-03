@@ -101,7 +101,7 @@ namespace PLH {
 
 		using View = std::pair<std::vector<CallbackHandler>&, std::shared_lock<std::shared_mutex>>;
 
-		Callback();
+		explicit Callback(std::weak_ptr<asmjit::JitRuntime> rt);
 		~Callback();
 
 		uint64_t getJitFunc(const asmjit::FuncSignature& sig, CallbackEntry pre, CallbackEntry post);
@@ -121,6 +121,7 @@ namespace PLH {
 	private:
 		static asmjit::TypeId getTypeId(DataType type);
 
+		std::weak_ptr<asmjit::JitRuntime> m_rt;
 		std::array<std::vector<CallbackHandler>, 2> m_callbacks;
 		std::shared_mutex m_mutex;
 		uint64_t m_functionPtr = 0;
@@ -129,8 +130,6 @@ namespace PLH {
 			const char* m_errorCode;
 		};
 	};
-
-	extern std::unique_ptr<asmjit::JitRuntime> g_jitRuntime;
 }
 
 inline PLH::ReturnFlag operator|(PLH::ReturnFlag lhs, PLH::ReturnFlag rhs) noexcept {

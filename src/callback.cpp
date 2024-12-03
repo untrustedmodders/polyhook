@@ -45,7 +45,8 @@ uint64_t PLH::Callback::getJitFunc(const asmjit::FuncSignature& sig, const Callb
 		return m_functionPtr;
 	}
 
-	if (!g_jitRuntime) {
+	auto rt = m_rt.lock();
+	if (!rt) {
 		m_errorCode = "JitRuntime invalid";
 		return 0;
 	}
@@ -67,7 +68,7 @@ uint64_t PLH::Callback::getJitFunc(const asmjit::FuncSignature& sig, const Callb
 	  physical registers may be inserted as nodes.
 	*/
 	asmjit::CodeHolder code;
-	code.init(g_jitRuntime->environment(), g_jitRuntime->cpuFeatures());
+	code.init(rt->environment(), rt->cpuFeatures());
 	
 	// initialize function
 	asmjit::x86::Compiler cc(&code);            
@@ -297,7 +298,7 @@ uint64_t PLH::Callback::getJitFunc(const asmjit::FuncSignature& sig, const Callb
 
 	cc.finalize();
 
-	if (asmjit::Error err = g_jitRuntime->add(&m_functionPtr, &code)) {
+	if (asmjit::Error err = rt->add(&m_functionPtr, &code)) {
 		m_functionPtr = 0;
 		m_errorCode = asmjit::DebugUtils::errorAsString(err);
 		return 0;
@@ -394,11 +395,13 @@ std::string_view PLH::Callback::getError() const {
 	return !m_functionPtr && m_errorCode ? m_errorCode : "";
 }
 
-PLH::Callback::Callback() {
+PLH::Callback::Callback(std::weak_ptr<asmjit::JitRuntime> rt) : m_rt(std::move(rt)) {
 }
 
 PLH::Callback::~Callback() {
-	if (m_functionPtr) {
-		g_jitRuntime->release(m_functionPtr);
+	if (auto rt = m_rt.lock()) {
+		if (m_functionPtr) {
+			rt->release(m_functionPtr);
+		}
 	}
 }
