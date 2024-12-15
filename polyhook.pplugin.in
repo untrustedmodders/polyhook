@@ -112,7 +112,6 @@
           "type": "uint8[]",
           "name": "arguments",
           "description": "Arguments type array",
-		  "ref": true,
 		  "enum": {
 			"name": "DataType"
 		  }
