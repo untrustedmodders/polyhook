@@ -18,13 +18,8 @@
 
 namespace PLH {
 	class PolyHookPlugin final : public plg::IPluginEntry, public MemAccessor {
-	public:
-		PolyHookPlugin() = default;
-		~PolyHookPlugin() override = default;
-
-	private:
-		void OnPluginStart() override;
-		void OnPluginEnd() override;
+		void OnPluginStart() final;
+		void OnPluginEnd() final;
 		
 	public:
 		Callback* hookDetour(void* pFunc, DataType returnType, std::span<const DataType> arguments);

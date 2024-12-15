@@ -30,12 +30,92 @@
         {
           "type": "uint8",
           "name": "returnType",
-          "description": "Return type"
+          "description": "Return type",
+		  "enum": {
+			"name": "DataType",
+			"description": "Enum representing different data types in the system.",
+			"values": [
+			  {
+				"value": 0,
+				"name": "Void",
+				"description": "Represents no data type (void)."
+			  },
+			  {
+				"value": 1,
+				"name": "Bool",
+				"description": "Represents a boolean data type (true or false)."
+			  },
+			  {
+				"value": 2,
+				"name": "Int8",
+				"description": "Represents an 8-bit signed integer."
+			  },
+			  {
+				"value": 3,
+				"name": "UInt8",
+				"description": "Represents an 8-bit unsigned integer."
+			  },
+			  {
+				"value": 4,
+				"name": "Int16",
+				"description": "Represents a 16-bit signed integer."
+			  },
+			  {
+				"value": 5,
+				"name": "UInt16",
+				"description": "Represents a 16-bit unsigned integer."
+			  },
+			  {
+				"value": 6,
+				"name": "Int32",
+				"description": "Represents a 32-bit signed integer."
+			  },
+			  {
+				"value": 7,
+				"name": "UInt32",
+				"description": "Represents a 32-bit unsigned integer."
+			  },
+			  {
+				"value": 8,
+				"name": "Int64",
+				"description": "Represents a 64-bit signed integer."
+			  },
+			  {
+				"value": 9,
+				"name": "UInt64",
+				"description": "Represents a 64-bit unsigned integer."
+			  },
+			  {
+				"value": 10,
+				"name": "Float",
+				"description": "Represents a 32-bit floating point number."
+			  },
+			  {
+				"value": 11,
+				"name": "Double",
+				"description": "Represents a 64-bit double precision floating point number."
+			  },
+			  {
+				"value": 12,
+				"name": "Pointer",
+				"description": "Represents a pointer to any type of data."
+			  },
+			  {
+				"value": 13,
+				"name": "String",
+				"description": "Represents a string data type."
+			  }
+			]
+		  }
         },
         {
           "type": "uint8[]",
           "name": "arguments",
-          "description": "Arguments type array"
+          "description": "Arguments type array",
+		  "ref": true,
+		  "enum": {
+			"name": "DataType"
+		  }
         }
       ],
       "retType": {
@@ -62,12 +142,18 @@
         {
           "type": "uint8",
           "name": "returnType",
-          "description": "Return type"
+          "description": "Return type",
+		  "enum": {
+			"name": "DataType"
+		  }
         },
         {
           "type": "uint8[]",
           "name": "arguments",
-          "description": "Arguments type array"
+          "description": "Arguments type array",
+		  "enum": {
+			"name": "DataType"
+		  }
         }
       ],
       "retType": {
@@ -94,12 +180,18 @@
         {
           "type": "uint8",
           "name": "returnType",
-          "description": "Return type"
+          "description": "Return type",
+		  "enum": {
+			"name": "DataType"
+		  }
         },
         {
           "type": "uint8[]",
           "name": "arguments",
-          "description": "Arguments type array"
+          "description": "Arguments type array",
+		  "enum": {
+			"name": "DataType"
+		  }
         }
       ],
       "retType": {
@@ -301,6 +393,7 @@
           "prototype": {
             "name": "CallbackHandler",
             "funcName": "CallbackHandler",
+			"description": "Callback function",
             "paramTypes": [
               {
                 "type": "bool",
@@ -325,7 +418,33 @@
             ],
             "retType": {
               "type": "int32",
-              "description": "<br>Ignored(0) = Handler didn't take any action<br>Handled(1) = We did something, but real function should still be called<br>Override(2) = Call real function, but use my return value<br>Supercede(3) = Skip real function; use my return value<br>Ignored for post hooks."
+              "description": "Ignored for post hooks.",
+			  "enum": {
+				"name": "ResultType",
+				"description": "Enum representing the possible results of an operation.",
+				"values": [
+			      {
+				    "value": 0,
+                    "name": "Ignored",
+                    "description": "Handler didn't take any action."
+                  },
+				  {
+				    "value": 1,
+                    "name": "Handled",
+                    "description": "We did something, but real function should still be called."
+                  },
+				  {
+				    "value": 2,
+                    "name": "Override",
+                    "description": "Call real function, but use my return value."
+                  },
+				  {
+				    "value": 3,
+                    "name": "Supercede",
+                    "description": "Skip real function; use my return value."
+                  }
+			    ]
+			  }
             }
           }
         }
@@ -358,6 +477,7 @@
           "prototype": {
             "name": "CallbackHandler",
             "funcName": "CallbackHandler",
+			"description": "Callback function",
             "paramTypes": [
               {
                 "type": "bool",
@@ -382,7 +502,10 @@
             ],
             "retType": {
               "type": "int32",
-              "description": "<br>Ignored(0) = Handler didn't take any action<br>Handled(1) = We did something, but real function should still be called<br>Override(2) = Call real function, but use my return value<br>Supercede(3) = Skip real function; use my return value<br>Ignored for post hooks."
+              "description": "Ignored for post hooks.",
+			  "enum": {
+				"name": "ResultType"
+			  }
             }
           }
         }
@@ -415,6 +538,7 @@
           "prototype": {
             "name": "CallbackHandler",
             "funcName": "CallbackHandler",
+			"description": "Callback function",
             "paramTypes": [
               {
                 "type": "bool",
@@ -439,7 +563,10 @@
             ],
             "retType": {
               "type": "int32",
-              "description": "<br>Ignored(0) = Handler didn't take any action<br>Handled(1) = We did something, but real function should still be called<br>Override(2) = Call real function, but use my return value<br>Supercede(3) = Skip real function; use my return value<br>Ignored for post hooks."
+              "description": "Ignored for post hooks.",
+			  "enum": {
+				"name": "ResultType"
+			  }
             }
           }
         }
