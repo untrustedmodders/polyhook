@@ -64,7 +64,7 @@ Callback* PolyHookPlugin::hookDetour(void* pFunc, DataType returnType, std::span
 
 	uint64_t JIT = callback->getJitFunc(returnType, arguments, &PreCallback, &PostCallback);
 
-	auto detour = std::make_unique<NatDetour>((uint64_t)pFunc, JIT, callback->getTrampolineHolder());
+	auto detour = std::make_unique<NatDetour>((uint64_t) pFunc, JIT, callback->getTrampolineHolder());
 	if (!detour->hook())
 		return nullptr;
 

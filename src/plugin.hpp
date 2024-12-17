@@ -1,6 +1,7 @@
 #pragma once
 
 #include "callback.hpp"
+#include "hash.hpp"
 
 #include <plugify/cpp_plugin.hpp>
 #include <plugin_export.h>
@@ -42,10 +43,10 @@ namespace PLH {
 
 	private:
 		std::shared_ptr<asmjit::JitRuntime> m_jitRuntime;
-		std::map<std::pair<void*, int>, std::unique_ptr<Callback>> m_callbacks;
-		std::map<void*, std::pair<VFuncMap, VFuncMap>> m_tables;
-		std::map<void*, std::unique_ptr<IHook>> m_vhooks;
-		std::map<void*, std::unique_ptr<NatDetour>> m_detours;
+		std::unordered_map<std::pair<void*, int>, std::unique_ptr<Callback>> m_callbacks;
+		std::unordered_map<void*, std::pair<VFuncMap, VFuncMap>> m_tables;
+		std::unordered_map<void*, std::unique_ptr<IHook>> m_vhooks;
+		std::unordered_map<void*, std::unique_ptr<NatDetour>> m_detours;
 		std::mutex m_mutex;
 	};
 }
