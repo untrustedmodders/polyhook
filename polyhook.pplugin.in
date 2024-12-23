@@ -343,6 +343,23 @@
       }
     },
     {
+      "name": "GetVTableIndex",
+      "group": "Lookup",
+      "description": "Attempts to find virtual table index of virtual function",
+      "funcName": "GetVTableIndex",
+      "paramTypes": [
+        {
+          "type": "ptr64",
+          "name": "pFunc",
+          "description": "Function address"
+        }
+      ],
+      "retType": {
+        "type": "int32",
+        "description": "Virtual table index"
+      }
+    },
+    {
       "name": "UnhookAll",
       "group": "Core",
       "description": "Removes all previously set hooks",
