@@ -1,6 +1,7 @@
 #pragma once
 
 #include "callback.hpp"
+#include "hash.hpp"
 
 #include <plugify/cpp_plugin.hpp>
 #include <plugin_export.h>
