@@ -1,7 +1,6 @@
 #pragma once
 
 #include "callback.hpp"
-#include "hash.hpp"
 
 #include <plugify/cpp_plugin.hpp>
 #include <plugin_export.h>
@@ -39,11 +38,11 @@ namespace PLH {
 		void unhookAllVirtual(void* pClass);
 
 		void* findOriginalAddr(void* pClass, void* pAddr);
-		int getVTableIndex(void* pFunc) const;
+		int getVirtualTableIndex(void* pFunc, ProtFlag flag = RWX) const;
 
 	private:
 		std::shared_ptr<asmjit::JitRuntime> m_jitRuntime;
-		std::unordered_map<std::pair<void*, int>, std::unique_ptr<Callback>> m_callbacks;
+		std::map<std::pair<void*, int>, std::unique_ptr<Callback>> m_callbacks;
 		std::unordered_map<void*, std::pair<VFuncMap, VFuncMap>> m_tables;
 		std::unordered_map<void*, std::unique_ptr<IHook>> m_vhooks;
 		std::unordered_map<void*, std::unique_ptr<NatDetour>> m_detours;

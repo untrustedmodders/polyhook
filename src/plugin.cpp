@@ -1,5 +1,4 @@
 #include "plugin.hpp"
-#include "scope_guard.hpp"
 
 PLH::PolyHookPlugin g_polyHookPlugin;
 EXPOSE_PLUGIN(PLUGIN_API, &g_polyHookPlugin)
@@ -114,7 +113,7 @@ Callback* PolyHookPlugin::hookVirtual(void* pClass, int index, DataType returnTy
 }
 
 Callback* PolyHookPlugin::hookVirtual(void* pClass, void* pFunc, DataType returnType, std::span<const DataType> arguments) {
-	return hookVirtual(pClass, getVTableIndex(pFunc), returnType, arguments);
+	return hookVirtual(pClass, getVirtualTableIndex(pFunc), returnType, arguments);
 }
 
 bool PolyHookPlugin::unhookDetour(void* pFunc) {
@@ -127,8 +126,8 @@ bool PolyHookPlugin::unhookDetour(void* pFunc) {
 	if (it != m_detours.end()) {
 		auto& detour = it->second;
 		detour->unHook();
-		m_detours.erase(it);
 		m_callbacks.erase(std::pair{detour.get(), -1});
+		m_detours.erase(it);
 		return true;
 	}
 
@@ -145,12 +144,8 @@ bool PolyHookPlugin::unhookVirtual(void* pClass, int index) {
 	if (it != m_vhooks.end()) {
 		auto& vtable = it->second;
 		vtable->unHook();
-
-		bool shouldBeUnhook = true;
-		auto hookGuard = ScopeGuard([&]() {
-			if (shouldBeUnhook) m_vhooks.erase(it);
-			m_callbacks.erase(std::pair{vtable.get(), index});
-		});
+		m_callbacks.erase(std::pair{vtable.get(), index});
+		//m_vhooks.erase(it);
 
 		auto it2 = m_tables.find(pClass);
 		if (it2 != m_tables.end()) {
@@ -158,25 +153,27 @@ bool PolyHookPlugin::unhookVirtual(void* pClass, int index) {
 			redirectMap.erase(index);
 			if (redirectMap.empty()) {
 				m_tables.erase(it2);
+				m_vhooks.erase(it);
 				return true;
 			}
 
 			vtable = std::make_unique<VTableSwapHook>((uint64_t) pClass, redirectMap, &origVFuncs);
-
-			if (!vtable->hook())
+			if (!vtable->hook()) {
+				m_vhooks.erase(it);
 				return false;
+			}
 
 			// do not unhook, we just replace our value in map
-			shouldBeUnhook = false;
-			return true;
 		}
+
+		return true;
 	}
 
 	return false;
 }
 
 bool PolyHookPlugin::unhookVirtual(void* pClass, void* pFunc) {
-	return unhookVirtual(pClass, getVTableIndex(pFunc));
+	return unhookVirtual(pClass, getVirtualTableIndex(pFunc));
 }
 
 Callback* PolyHookPlugin::findDetour(void* pFunc) const {
@@ -202,7 +199,7 @@ Callback* PolyHookPlugin::findVirtual(void* pClass, int index) const {
 }
 
 Callback* PolyHookPlugin::findVirtual(void* pClass, void* pFunc) const {
-	return findVirtual(pClass, getVTableIndex(pFunc));
+	return findVirtual(pClass, getVirtualTableIndex(pFunc));
 }
 
 void PolyHookPlugin::unhookAll() {
@@ -243,10 +240,10 @@ void* PolyHookPlugin::findOriginalAddr(void* pClass, void* pAddr) {
 	return nullptr;
 }
 
-int PolyHookPlugin::getVTableIndex(void* pFunc) const {
+int PolyHookPlugin::getVirtualTableIndex(void* pFunc, ProtFlag flag) const {
 	constexpr size_t size = 12;
 
-	MemoryProtector protector((uint64_t)pFunc, size, R, *(MemAccessor*)this);
+	MemoryProtector protector((uint64_t)pFunc, size, flag, *(MemAccessor*)this);
 
 #if defined(__GNUC__) || defined(__clang__)
 	struct GCC_MemFunPtr {
@@ -304,7 +301,7 @@ int PolyHookPlugin::getVTableIndex(void* pFunc) const {
 			// Check where it'd jump
 			addr += 5 /*size of the instruction*/ + *(uint32_t*)(addr + 1);
 
-			protector = std::make_unique<MemoryProtector>((uint64_t)addr, size, R, *(MemAccessor*)this);
+			protector = std::make_unique<MemoryProtector>((uint64_t)addr, size, flag, *(MemAccessor*)this);
 		}
 
 		bool ok = false;
@@ -325,7 +322,7 @@ int PolyHookPlugin::getVTableIndex(void* pFunc) const {
 		if (!ok)
 			return -1;
 
-		constexpr int PtrSize = (int)(sizeof(void*));
+		constexpr int PtrSize = static_cast<int>(sizeof(void*));
 
 		if (*addr++ == 0xFF) {
 			if (*addr == 0x60)
@@ -399,7 +396,7 @@ PLUGIN_API void* FindOriginalAddr(void* pClass, void* pAddr) {
 
 extern "C"
 PLUGIN_API int GetVTableIndex(void* pFunc) {
-	return g_polyHookPlugin.getVTableIndex(pFunc);
+	return g_polyHookPlugin.getVirtualTableIndex(pFunc);
 }
 
 extern "C"
