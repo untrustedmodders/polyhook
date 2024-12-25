@@ -379,7 +379,7 @@ bool PLH::Callback::areCallbacksRegistered() const {
 	return areCallbacksRegistered(CallbackType::Pre) || areCallbacksRegistered(CallbackType::Post);
 }
 
-PLH::Callback::View PLH::Callback::getCallbacks(const CallbackType type) {
+PLH::Callback::Callbacks PLH::Callback::getCallbacks(const CallbackType type) {
 	return { m_callbacks[to_integral(type)], std::shared_lock(m_mutex) };
 }
 
@@ -399,6 +399,15 @@ PLH::Callback::Callback(std::weak_ptr<asmjit::JitRuntime> rt) : m_rt(std::move(r
 }
 
 PLH::Callback::~Callback() {
+	int spin_count = 0;
+	while (m_mutex.has_shared_locks()) {
+		if (++spin_count < 16) {
+			_mm_pause();
+		} else {
+			std::this_thread::yield();
+			spin_count = 0;
+		}
+	}
 	if (auto rt = m_rt.lock()) {
 		if (m_functionPtr) {
 			rt->release(m_functionPtr);

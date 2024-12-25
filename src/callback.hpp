@@ -13,6 +13,7 @@
 #include <array>
 #include <span>
 #include <shared_mutex>
+#include <atomic>
 
 namespace PLH {
 	enum class DataType : uint8_t {
@@ -49,6 +50,33 @@ namespace PLH {
 		Default = 0, ///< Value means this gives no information about return flag.
 		NoPost = 1,
 		Supercede = 2,
+	};
+
+	struct SharedMutexWithCounter {
+		std::shared_mutex m_mutex;
+		std::atomic<int> m_shared_lock_count{0};
+
+		void lock_shared() {
+			m_mutex.lock_shared();
+			m_shared_lock_count.fetch_add(1, std::memory_order_relaxed);
+		}
+
+		void unlock_shared() {
+			m_shared_lock_count.fetch_sub(1, std::memory_order_relaxed);
+			m_mutex.unlock_shared();
+		}
+
+		void lock() {
+			m_mutex.lock();
+		}
+
+		void unlock() {
+			m_mutex.unlock();
+		}
+
+		bool has_shared_locks() const {
+			return m_shared_lock_count.load(std::memory_order_acquire) > 0;
+		}
 	};
 
 	class Callback {
@@ -98,8 +126,7 @@ namespace PLH {
 
 		typedef void (*CallbackEntry)(Callback* callback, const Parameters* params, Property* property, const Return* ret);
 		typedef ReturnAction (*CallbackHandler)(CallbackType type, const Parameters* params, int32_t count, const Return* ret);
-
-		using View = std::pair<std::vector<CallbackHandler>&, std::shared_lock<std::shared_mutex>>;
+		using Callbacks = std::pair<std::vector<CallbackHandler>&, std::shared_lock<SharedMutexWithCounter>>;
 
 		explicit Callback(std::weak_ptr<asmjit::JitRuntime> rt);
 		~Callback();
@@ -109,7 +136,7 @@ namespace PLH {
 
 		uint64_t* getTrampolineHolder();
 		uint64_t* getFunctionHolder();
-		View getCallbacks(CallbackType type);
+		Callbacks getCallbacks(CallbackType type);
 		std::string_view getError() const;
 
 		bool addCallback(CallbackType type, CallbackHandler callback);
@@ -123,7 +150,7 @@ namespace PLH {
 
 		std::weak_ptr<asmjit::JitRuntime> m_rt;
 		std::array<std::vector<CallbackHandler>, 2> m_callbacks;
-		std::shared_mutex m_mutex;
+		SharedMutexWithCounter m_mutex;
 		uint64_t m_functionPtr = 0;
 		union {
 			uint64_t m_trampolinePtr = 0;
@@ -134,9 +161,7 @@ namespace PLH {
 
 inline PLH::ReturnFlag operator|(PLH::ReturnFlag lhs, PLH::ReturnFlag rhs) noexcept {
 	using underlying = std::underlying_type_t<PLH::ReturnFlag>;
-	return static_cast<PLH::ReturnFlag>(
-			static_cast<underlying>(lhs) | static_cast<underlying>(rhs)
-	);
+	return static_cast<PLH::ReturnFlag>(static_cast<underlying>(lhs) | static_cast<underlying>(rhs));
 }
 
 inline bool operator&(PLH::ReturnFlag lhs, PLH::ReturnFlag rhs) noexcept {
