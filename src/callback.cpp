@@ -2,6 +2,9 @@
 
 #include "polyhook2/MemProtector.hpp"
 
+#include <thread>
+#include <immintrin.h>
+
 template<typename T>
 constexpr asmjit::TypeId getTypeIdx() noexcept {
 	return static_cast<asmjit::TypeId>(asmjit::TypeUtils::TypeIdOfT<T>::kTypeId);
