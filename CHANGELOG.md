@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.2.0](https://github.com/untrustedmodders/polyhook/compare/v1.1.3...v1.2.0) (2025-04-03)
+
+
+### Features
+
+* add variadic function support ([efb5b5f](https://github.com/untrustedmodders/polyhook/commit/efb5b5f3e962930822cd35b9165a46b2807ce7e1))
+
+
+### Bug Fixes
+
+* add cmake versioning ([2851022](https://github.com/untrustedmodders/polyhook/commit/285102299b955dd1dff642f1da96eb516cf9d183))
+* add sourcehook fix ([fcae92a](https://github.com/untrustedmodders/polyhook/commit/fcae92a4e3fa784b961cb36dde65ede297eda0cc))
+* rework thread safe string storage ([f96aa93](https://github.com/untrustedmodders/polyhook/commit/f96aa93d1c1c569909df55a0da817aec94de2f83))
+* update clang tools ([a87ca93](https://github.com/untrustedmodders/polyhook/commit/a87ca933d9245c1c061ec7a3ff4b9389528090e5))
+* wrap more code under macro ([f7fb940](https://github.com/untrustedmodders/polyhook/commit/f7fb940e97d539c62ad1826c42d0cccb09953a84))
+
 ## [1.1.3](https://github.com/untrustedmodders/polyhook/compare/v1.1.2...v1.1.3) (2025-03-26)
 
 
