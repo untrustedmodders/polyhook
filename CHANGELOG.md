@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.2.1](https://github.com/untrustedmodders/polyhook/compare/v1.2.0...v1.2.1) (2025-06-04)
+
+
+### Bug Fixes
+
+* add macos export symbols ([3205226](https://github.com/untrustedmodders/polyhook/commit/32052264951cf84fed158bba5c79d43546948d24))
+* add x86 support ([f635d81](https://github.com/untrustedmodders/polyhook/commit/f635d81aca47d1f5d05c8cbe535cad8d461b3532))
+* correct file name ([a476c06](https://github.com/untrustedmodders/polyhook/commit/a476c06969730b7e34c9684ea4a4bdf1ba54b63f))
+* remove deprecated call conv ([02e0716](https://github.com/untrustedmodders/polyhook/commit/02e071657132c0f91c1f2ef4463b938e1f1601a2))
+* update version naming ([03ffc4e](https://github.com/untrustedmodders/polyhook/commit/03ffc4e47f6db5c54d8c51b72aa0a298dbf4fc7c))
+
 ## [1.2.0](https://github.com/untrustedmodders/polyhook/compare/v1.1.3...v1.2.0) (2025-05-26)
 
 
